@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.wp.entities.Ratings;
 import com.wp.entities.Transporter;
+import com.wp.services.RatingsServiceInterface;
 import com.wp.services.TransporterServiceInterface;
 import com.wp.services.UserServiceInterface;
 @Controller
@@ -23,6 +25,9 @@ public class AdminController {
 	private TransporterServiceInterface tservice;
 	@Autowired
 	private UserServiceInterface uservice;
+	
+	@Autowired
+	private RatingsServiceInterface rservice;
 	
 	@RequestMapping("viewtransporter")
 	public ModelAndView viewt() {
@@ -56,6 +61,20 @@ public class AdminController {
 		tservice.updateTransporter(trans);
 		ModelAndView mv= new ModelAndView("redirect:viewtransporter");
 		return mv;	
+	}
+	@RequestMapping("deletetransporter")
+	public ModelAndView deletetransporter(@RequestParam("number") String email) {
+		tservice.removeTransporter(email);
+		ModelAndView mv= new ModelAndView("viewtransporter");
+		return mv;
+	}
+	@RequestMapping("ratings")
+	public ModelAndView viewrating() {
+		List<Ratings> rate= rservice.getAllRatings();
+		ModelAndView mv= new ModelAndView("viewratings");
+		mv.addObject("rating", rate);
+		return mv;
+		
 	}
 
 }

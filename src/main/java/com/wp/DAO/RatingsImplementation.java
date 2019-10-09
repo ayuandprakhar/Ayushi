@@ -1,11 +1,15 @@
 package com.wp.DAO;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.wp.entities.Deals;
 import com.wp.entities.Ratings;
 import com.wp.entities.Transporter;
 @Repository
@@ -43,6 +47,14 @@ public class RatingsImplementation implements RatingsADAOInterface {
 	public int getRatings(String email) {
 		return 0;
 
+	}
+
+	public List<Ratings> getAllRatings() {
+		Session session = sessionFactory.openSession();
+		Criteria cr = session.createCriteria(Ratings.class);
+		List<Ratings> rating = cr.list();
+		session.close();
+		return rating;
 	}
 
 }
