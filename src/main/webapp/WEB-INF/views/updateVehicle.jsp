@@ -3,7 +3,7 @@
 <body>
 	<h3>Update-Vehicle-Form/h3>
 	<hr>
-	<form:form action="updatevehicle" modelAttribute="Vehicles" enctype="multipart/form-data">
+	<form:form action="updates" modelAttribute="vehicle" enctype="multipart/form-data">
 		<pre>
 		Vehicle-Model <form:input path="v_model" />	
 		Vehicle-Type	<form:input path="v_type" />

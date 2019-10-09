@@ -2,6 +2,7 @@ package com.wp.entities;
 
 import java.sql.Blob;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,10 +18,11 @@ public class Vehicles {
 	private String v_model;
 	private String v_type;
 	private Blob v_rc;
+	public boolean verify;
 	@ManyToOne()
 	Transporter transporter;
 
-	@OneToOne(mappedBy="vehicle")
+	@OneToOne(mappedBy="vehicle",orphanRemoval=true, cascade = CascadeType.PERSIST)
 	Deals deal;
 
 	public String getV_no() {
@@ -55,12 +57,32 @@ public class Vehicles {
 		this.v_rc = v_rc;
 	}
 
+	public Vehicles(String v_no, String v_model, String v_type, Blob v_rc, boolean verify, Transporter transporter,
+			Deals deal) {
+		super();
+		this.v_no = v_no;
+		this.v_model = v_model;
+		this.v_type = v_type;
+		this.v_rc = v_rc;
+		this.verify = verify;
+		this.transporter = transporter;
+		this.deal = deal;
+	}
+
 	public Deals getDeal() {
 		return deal;
 	}
 
 	public void setDeal(Deals deal) {
 		this.deal = deal;
+	}
+
+	public boolean isVerify() {
+		return verify;
+	}
+
+	public void setVerify(boolean verify) {
+		this.verify = verify;
 	}
 
 	public Transporter getTransporter() {

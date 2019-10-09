@@ -13,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.wp.entities.Transporter;
 import com.wp.entities.Vehicles;
 @Repository
 public class VehicleImplementation implements VehicleDAOInterface {
@@ -86,5 +87,13 @@ public class VehicleImplementation implements VehicleDAOInterface {
 			
 		}
 		return map;
+	}
+
+	public List<Vehicles> getAllVehicles() {
+		Session session = sessionfactory.openSession();
+		Criteria cr = session.createCriteria(Vehicles.class);
+		List<Vehicles> v = cr.list();
+		session.close();
+		return v;
 	}
 }

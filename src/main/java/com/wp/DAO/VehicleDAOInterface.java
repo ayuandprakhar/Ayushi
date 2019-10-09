@@ -18,5 +18,6 @@ public interface VehicleDAOInterface {
 	public List<Vehicles> getAllVehicle(String email);
 	
 	Map<String, String> getId(String email);
+	public List<Vehicles> getAllVehicles();
 
 }

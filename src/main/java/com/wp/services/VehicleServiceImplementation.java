@@ -43,4 +43,8 @@ public class VehicleServiceImplementation  implements VehicleServiceInterface{
 		return vehicle.getId(email);
 	}
 
+	public List<Vehicles> getAllVehicles() {
+		return vehicle.getAllVehicles();
+	}
+
 }

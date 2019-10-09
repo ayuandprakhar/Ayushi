@@ -73,7 +73,7 @@ public class TransporterController {
 		transporter.getImage();
 		service.updateTransporter(transporter);
 		
-		ModelAndView mv= new ModelAndView("viewtransporter");
+		ModelAndView mv= new ModelAndView("updatesuccess");
 		mv.addObject("transporters", transporter);
 		return mv;
 	}

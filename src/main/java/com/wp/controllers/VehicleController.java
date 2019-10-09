@@ -26,7 +26,7 @@ import com.wp.services.VehicleServiceInterface;
 public class VehicleController {
 
 	@Autowired
-	private VehicleServiceInterface vehicle;
+	private VehicleServiceInterface vservice;
 	@RequestMapping("addvehicle")
 	public ModelAndView insertVehicle() {
 		ModelAndView mv = new ModelAndView("addVehicle");
@@ -35,8 +35,8 @@ public class VehicleController {
 	}
 	@RequestMapping("vehiclelist")
 	public ModelAndView showvehicle(@SessionAttribute("email") String email) {
-		List<Vehicles> v = vehicle.getAllVehicle(email);
-		ModelAndView mv = new ModelAndView("viewvehicle");
+		List<Vehicles> v = vservice.getAllVehicle(email);
+		ModelAndView mv = new ModelAndView("vehicleadmin");
 		mv.addObject("vehicle", v);
 		return mv;
 	}
@@ -50,13 +50,14 @@ public class VehicleController {
 		byte[] b = file.getBytes();
 		Blob blob = BlobProxy.generateProxy(b);
 		v.setV_rc(blob);
-		vehicle.addVehicle(v);
+		v.setVerify(false);
+		vservice.addVehicle(v);
 		ModelAndView mv = new ModelAndView("success");
 		return mv;
 	}	
 	@RequestMapping("LoadVehicle")
 	public void readImage(@RequestParam("number") String v, HttpServletResponse response) {
-		Vehicles vl =vehicle.getVehicle(v);
+		Vehicles vl =vservice.getVehicle(v);
 		Blob bl =vl.getV_rc();
 		byte[] b = null;
 		try {
@@ -68,6 +69,35 @@ public class VehicleController {
 			e.printStackTrace();
 		}
 	}
+	@RequestMapping("updatevehicle")
+	public ModelAndView updateVehicle(@RequestParam("number") String v_id) {
+		Vehicles vehicle= vservice.getVehicle(v_id);
+		ModelAndView mv = new ModelAndView("updateVehicle");
+		mv.addObject("vehicle", vehicle);
+		return mv;
+
+	}
+@RequestMapping("updates")
+public ModelAndView update(@ModelAttribute("vehicle") Vehicles vehicle, @RequestParam("image1") MultipartFile file) throws Exception
+{
+	byte[] b = file.getBytes();
+	Blob blob = BlobProxy.generateProxy(b);
+	vehicle.getV_rc();
+	vehicle.setVerify(false);
+	vservice.updateVehicle(vehicle);
+	
+	ModelAndView mv= new ModelAndView("updatesuccess");
+	mv.addObject("vehicle", vehicle);
+	return mv;
+}
+@RequestMapping("deletevehicle")
+public ModelAndView deletevehicle(@RequestParam("number") String v_id) {
+	
+	vservice.removeVehicle(v_id);
+	ModelAndView mv= new ModelAndView("redirect:vehiclelist");
+	return mv;
+}
+
 }
 
 
