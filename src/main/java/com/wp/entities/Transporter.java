@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Transporter {
@@ -31,6 +32,9 @@ public class Transporter {
 
 	@OneToMany(mappedBy = "transporter")
 	private List<Queries> query = new ArrayList<Queries>();
+	
+	@OneToOne(mappedBy = "transporter")
+	private Ratings ratings;
 
 	
 	public boolean isVerify() {
@@ -128,19 +132,56 @@ public class Transporter {
 	public void setQuery(List<Queries> query) {
 		this.query = query;
 	}
+	
+	
 
-	public Transporter(String t_id, String t_firm_name, String t_email_id, String t_password, String t_mobile,
-			String t_pan_no, String t_gst_no, Blob image, List<Vehicles> vehicle, List<Deals> deal,
-			List<Queries> query) {
+	public Ratings getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(Ratings ratings) {
+		this.ratings = ratings;
+	}
+
+	public Transporter(String t_email_id) {
 		super();
+		this.t_email_id = t_email_id;
+	}
+
+	public Transporter(String t_email_id, String t_id, String t_firm_name, String t_password, String t_mobile,
+			String t_pan_no, String t_gst_no, Blob image, boolean verify, List<Vehicles> vehicle, List<Deals> deal,
+			List<Queries> query, Ratings ratings) {
+		super();
+		this.t_email_id = t_email_id;
 		this.t_id = t_id;
 		this.t_firm_name = t_firm_name;
-		this.t_email_id = t_email_id;
 		this.t_password = t_password;
 		this.t_mobile = t_mobile;
 		this.t_pan_no = t_pan_no;
 		this.t_gst_no = t_gst_no;
 		this.image = image;
+		this.verify = verify;
+		this.vehicle = vehicle;
+		this.deal = deal;
+		this.query = query;
+		this.ratings = ratings;
+	}
+	
+	
+	
+	public Transporter(String t_email_id, String t_id, String t_firm_name, String t_password, String t_mobile,
+			String t_pan_no, String t_gst_no, Blob image, boolean verify, List<Vehicles> vehicle, List<Deals> deal,
+			List<Queries> query) {
+		super();
+		this.t_email_id = t_email_id;
+		this.t_id = t_id;
+		this.t_firm_name = t_firm_name;
+		this.t_password = t_password;
+		this.t_mobile = t_mobile;
+		this.t_pan_no = t_pan_no;
+		this.t_gst_no = t_gst_no;
+		this.image = image;
+		this.verify = verify;
 		this.vehicle = vehicle;
 		this.deal = deal;
 		this.query = query;
